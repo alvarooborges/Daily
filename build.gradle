@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'me.bristermitten.pdm' version '0.0.30'
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
+    id 'net.minecrell.plugin-yml.bukkit' version '0.3.0'
+}
+
+group 'br.com.kodeway'
+version '1.0-SNAPSHOT'
+
+tasks.build.dependsOn('pdm', 'shadowJar')
+
+repositories {
+    mavenCentral()
+    jcenter()
+
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://oss.sonatype.org/content/groups/public/' }
+    maven { url = 'https://repo.codemc.org/repository/maven-public' }
+    maven { url = 'https://repo.citizensnpcs.co/' }
+
+    maven { url = 'https://papermc.io/repo/repository/maven-public/' }
+
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT'
+    compileOnly 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.0'
+    compileOnly 'net.citizensnpcs:citizens:2.0.27-SNAPSHOT'
+
+    implementation 'com.github.HenryFabio:inventory-api:2.0.3'
+    implementation 'com.github.DevNatan:inventory-framework:43074d61ba'
+    implementation 'com.github.HenryFabio:sql-provider:9561f20fd2'
+    implementation 'com.github.HenryFabio:configuration-injector:main-SNAPSHOT'
+
+    pdm 'com.github.SaiintBrisson:command-framework:1.1.0'
+
+    def lombok = "org.projectlombok:lombok:1.18.16"
+
+    compileOnly lombok
+    annotationProcessor lombok
+}
+
+shadowJar {
+    archiveName("${project.name}-${project.version}.jar")
+}
